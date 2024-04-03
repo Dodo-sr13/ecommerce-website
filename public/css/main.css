@@ -190,6 +190,7 @@ form {
 }
 
 .card {
+  border-radius: 25px;
   background-color: white;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
@@ -279,7 +280,7 @@ form {
 
 .pagination a {
   text-decoration: none;
-  color: #00695c;
+  color: #000000cb;
   padding: 0.5rem;
   border: 1px solid #000000cb;
   margin: 0 1rem;
