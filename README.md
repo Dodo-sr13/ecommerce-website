@@ -38,7 +38,7 @@ Before you begin, ensure you have the following installed:
 2. Navigate into the project directory:
 
     ```bash
-    cd e-commerce-node-website
+    cd ecommerce-website
     ```
 
 3. Install dependencies:
@@ -52,7 +52,6 @@ Before you begin, ensure you have the following installed:
     Create a `.env` file in the root directory and add the following variables:
 
     ```plaintext
-    PORT=3000
     MONGODB_URI=your_mongodb_connection_uri
     API_KEY=your_api_key
     DOMAIN=your_domain
