@@ -9,8 +9,8 @@ const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
-const API_KEY = '';
-const DOMAIN = '';
+const API_KEY = process.env.API_KEY;
+const DOMAIN = process.env.DOMAIN;
 
 const mailGun = new MailGun(formData);
 const client = mailGun.client({username: 'api', key: API_KEY});
