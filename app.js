@@ -13,7 +13,7 @@ const multer = require('multer');
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const MONGODB_URI = 'mongodb+srv://dodo1311:pommy21dodo13@cluster0.odxkgnc.mongodb.net/shop?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = '';
 
 const app = express();
 const store = new MongoDBStore({
