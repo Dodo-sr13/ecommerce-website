@@ -1,6 +1,10 @@
+// const dotenv = require('dotenv')
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+require("dotenv").config();
+
+// console.log(process.env.MONGODB_URI)
 
 const mongoose = require('mongoose');
 const session = require('express-session');
@@ -13,7 +17,7 @@ const multer = require('multer');
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const MONGODB_URI = 'mongodb+srv://dodo1311:pommy21dodo13@cluster0.odxkgnc.mongodb.net/shop?retryWrites=true&w=majority&appName=Cluster0';
+const MONGODB_URI = process.env.MONGODB_URI;
 
 const app = express();
 const store = new MongoDBStore({

@@ -3,13 +3,14 @@ const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const MailGun = require('mailgun.js');
 const formData = require('form-data');
+require("dotenv").config();
 
 const { validationResult } = require('express-validator');
 
 const User = require('../models/user');
 
-const API_KEY = '5fea2e84c3828be6eb8e05d52a3181d6-f68a26c9-22662376';
-const DOMAIN = 'sandbox180aa2acda37449983046f23a1b270a8.mailgun.org';
+const API_KEY = process.env.API_KEY;
+const DOMAIN = process.env.DOMAIN;
 
 const mailGun = new MailGun(formData);
 const client = mailGun.client({username: 'api', key: API_KEY});
