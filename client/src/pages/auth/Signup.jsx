@@ -6,6 +6,14 @@ import "react-toastify/dist/ReactToastify.css";
 import Head from "../../components/Head";
 import Navigation from "../../components/Navigation";
 import Loader from "../../components/Loader"; 
+import {
+  API_URL,
+  NODE_ENV,
+  REACT_APP_API_URL,
+  STRIPE_API,
+} from "../../constants";
+
+const API_BASE_PATH = NODE_ENV === "development" ? API_URL : REACT_APP_API_URL;
 
 const SignupPage = (props) => {
   const [email, setEmail] = useState("");
@@ -75,7 +83,7 @@ const SignupPage = (props) => {
 
     try {
       const response = await axios.put(
-        "http://localhost:3000/api/signup",
+        `${API_BASE_PATH}/signup`,
         {
           username,
           email,

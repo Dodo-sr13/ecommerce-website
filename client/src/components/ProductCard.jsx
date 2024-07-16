@@ -3,6 +3,14 @@ import axiosInstance from "../axiosInstance";
 import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "./Loader"; // Assuming you have a Loader component
+import {
+  API_URL,
+  NODE_ENV,
+  REACT_APP_API_URL,
+  STRIPE_API_KEY,
+} from "../constants";
+
+const API_BASE_PATH =( NODE_ENV === "development" ) ? API_URL : REACT_APP_API_URL;
 
 const ProductCard = ({ product, admin, customer }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -76,7 +84,7 @@ const ProductCard = ({ product, admin, customer }) => {
         </header>
         <div className="card__image">
           <img
-            src={`http://localhost:3000/${product.imageUrl}`}
+            src={`${API_BASE_PATH}/${product.imageUrl}`}
             alt={product.title}
           />
         </div>

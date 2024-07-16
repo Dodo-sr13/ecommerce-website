@@ -10,7 +10,7 @@ const { response } = require("express");
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
-const CLIENT_URL = process.env.CLIENT_URL || "http://localhost:8080";
+const CLIENT_URL = process.env.NODE_DEV === "development" ? process.env.CLIENT_URL : "https://ecommerce-website-fe.onrender.com";
 
 const ITEMS_PER_PAGE = 8;
 

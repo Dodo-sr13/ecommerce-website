@@ -8,6 +8,13 @@ import Navigation from "../../components/Navigation";
 import Head from "../../components/Head";
 import End from "../../components/End";
 
+import { API_URL, NODE_ENV, REACT_APP_API_URL, STRIPE_API_KEY } from "../../constants";
+
+const API_BASE_PATH =
+  NODE_ENV === "development"
+    ? API_URL
+    : REACT_APP_API_URL;
+
 const AddProduct = () => {
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
@@ -28,7 +35,7 @@ const AddProduct = () => {
       formData.append("image", image);
 
       const response = await axios.post(
-        "http://localhost:3000/api/admin/add-product",
+        `${API_BASE_PATH}/admin/add-product`,
         formData,
         {
           headers: {

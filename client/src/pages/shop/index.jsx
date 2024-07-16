@@ -8,6 +8,16 @@ import Pagination from "../../components/Pagination";
 import ProductCard from "../../components/ProductCard";
 import Loader from "../../components/Loader"; // Import Loader component
 
+import {
+  API_URL,
+  NODE_ENV,
+  REACT_APP_API_URL,
+  STRIPE_API_KEY,
+} from "../../constants";
+
+const API_BASE_PATH = NODE_ENV === "development" ? API_URL : REACT_APP_API_URL;
+
+
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,9 +33,9 @@ const Shop = () => {
   const fetchProducts = async (page) => {
     setLoading(true); // Set loading to true when fetching products
     try {
-      const response = await axios.get(
-        `http://localhost:3000/api/?page=${page}`
-      );
+
+      const response = await axios.get(`${API_BASE_PATH}/?page=${page}`);
+
       const { prods, currentPage, hasNextPage, hasPreviousPage, lastPage } =
         response.data;
       setProducts(prods);

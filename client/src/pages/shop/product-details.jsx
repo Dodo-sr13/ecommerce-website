@@ -7,8 +7,15 @@ import axios from "axios";
 import Head from "../../components/Head";
 import End from "../../components/End";
 import Loader from "../../components/Loader";
-import { API_BASE_PATH } from "../../constants";
 import axiosInstance from "../../axiosInstance";
+import {
+  API_URL,
+  NODE_ENV,
+  REACT_APP_API_URL,
+  STRIPE_API_KEY,
+} from "../../constants";
+
+const API_BASE_PATH = NODE_ENV === "development" ? API_URL : REACT_APP_API_URL;
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -88,7 +95,7 @@ const ProductDetails = () => {
             </header>
             <div className="card__image">
               <img
-                src={`http://localhost:3000/${product.imageUrl}`}
+                src={`${API_BASE_PATH}/${product.imageUrl}`}
                 alt={product.title}
               />
             </div>

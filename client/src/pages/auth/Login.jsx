@@ -7,6 +7,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import Loader from "../../components/Loader";
 import "react-toastify/dist/ReactToastify.css";
+import {
+  API_URL,
+  NODE_ENV,
+  REACT_APP_API_URL,
+  STRIPE_API_KEY,
+} from "../../constants";
+
+const API_BASE_PATH = NODE_ENV === "development" ? API_URL : REACT_APP_API_URL;
 
 const LoginPage = (props) => {
   const [username, setUsername] = useState("");
@@ -43,7 +51,7 @@ const LoginPage = (props) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/login",
+        `${API_BASE_PATH}/login`,
         {
           username,
           password,
@@ -128,7 +136,7 @@ const LoginPage = (props) => {
   const handleForgotPassword = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/reset",
+        `${API_BASE_PATH}/reset`,
         {
           username: forgotUsername,
         },

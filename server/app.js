@@ -51,7 +51,6 @@ const fileFilter = (req, file, cb) => {
 
 app.use(
   cors({
-    origin: "http://localhost:8080", // Replace with your frontend URL
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -107,9 +106,9 @@ const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
 
-app.use('/api',authRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api',shopRoutes);
+app.use('/',authRoutes);
+app.use('/admin', adminRoutes);
+app.use('/',shopRoutes);
 
 app.get('/500', errorController.get500);
 
@@ -130,8 +129,8 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(MONGODB_URI)
   .then(result => {
-    app.listen(3000, () => {
-      console.log("Server is running on port 3000");
+    app.listen(8080, () => {
+      console.log("Server is running on port 8080");
     });
   })
   .catch(err => {

@@ -6,9 +6,15 @@ import Navigation from "../../components/Navigation";
 import Head from "../../components/Head";
 import End from "../../components/End";
 import { toast } from "react-toastify";
-import { STRIPE_API_KEY } from "../../constants";
 import { loadStripe } from "@stripe/stripe-js";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL, NODE_ENV, REACT_APP_API_URL, STRIPE_API_KEY } from "../../constants";
+
+
+const API_BASE_PATH =
+  NODE_ENV === "development"
+    ? API_URL
+    : REACT_APP_API_URL;
 
 const stripePromise = loadStripe(STRIPE_API_KEY);
 
@@ -128,7 +134,7 @@ const Cart = () => {
                 <div key={item._id} className="cart-item">
                   <p className="cart-item__title">{item.productId.title}</p>
                   <img
-                    src={`http://localhost:3000/${item.productId.imageUrl}`}
+                    src={`${API_BASE_PATH}/${item.productId.imageUrl}`}
                     alt={item.productId.title}
                     className="cart-item__image"
                   />
