@@ -8,7 +8,12 @@ import Navigation from "../../components/Navigation";
 import Head from "../../components/Head";
 import End from "../../components/End";
 
-import { API_URL, NODE_ENV, REACT_APP_API_URL, STRIPE_API_KEY } from "../../constants";
+import {
+  API_URL,
+  NODE_ENV,
+  REACT_APP_API_URL,
+  STRIPE_API_KEY,
+} from "../../constants/index";
 
 const API_BASE_PATH =
   NODE_ENV === "development"

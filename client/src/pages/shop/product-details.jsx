@@ -13,7 +13,7 @@ import {
   NODE_ENV,
   REACT_APP_API_URL,
   STRIPE_API_KEY,
-} from "../../constants";
+} from "../../constants/index";
 
 const API_BASE_PATH = NODE_ENV === "development" ? API_URL : REACT_APP_API_URL;
 

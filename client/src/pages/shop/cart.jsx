@@ -8,7 +8,7 @@ import End from "../../components/End";
 import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 import "react-toastify/dist/ReactToastify.css";
-import { API_URL, NODE_ENV, REACT_APP_API_URL, STRIPE_API_KEY } from "../../constants";
+import { API_URL, NODE_ENV, REACT_APP_API_URL, STRIPE_API_KEY } from "../../constants/index";
 
 
 const API_BASE_PATH =
