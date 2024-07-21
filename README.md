@@ -1,4 +1,4 @@
-# E-Commerce Node Website
+# E-Commerce Website
 
 Welcome to my E-Commerce Website! This repository contains the codebase for a fully functional full stack e-commerce website built using React and Node. Whether you're a developer looking to contribute or a user interested in setting up your own online store, this README will guide you through the project setup and usage.
 
