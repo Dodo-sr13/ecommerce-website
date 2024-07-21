@@ -41,7 +41,7 @@ Before you begin, ensure you have the following installed:
     ```bash
     cd ecommerce-website
     ```
-3. Navigate to client and server directories
+3. Navigate to client and server directories in separate terminal windows
 
    ```bash
     cd client
