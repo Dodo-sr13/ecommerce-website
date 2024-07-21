@@ -1,12 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import axiosInstance from "../axiosInstance";
 import { toast } from "react-toastify";
+import CartSideBar from "./CartSideBar";
+import { FiShoppingCart } from "react-icons/fi";
 
 const Navigation = ({ isAuthenticated, isCustomer }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
+  const [totalSum, setTotalSum] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const username = localStorage.getItem("username");
+
+  useEffect(() => {
+    if (isAuthenticated && isCustomer) {
+      const fetchCartItems = async () => {
+        setLoading(true);
+        try {
+          const response = await axiosInstance.get("/cart");
+          if (response.data.responseCode === 1) {
+            setCartItems(response.data.items || []);
+            setTotalSum(response.data.totalSum);
+          } else {
+            toast.error(response.data.message, {
+              autoClose: 2000,
+            });
+          }
+        } catch (error) {
+          //
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchCartItems();
+    }
+  }, [isAuthenticated, isCustomer]);
 
   const handleLogout = async (e) => {
     e.preventDefault();
@@ -48,6 +79,10 @@ const Navigation = ({ isAuthenticated, isCustomer }) => {
     setShowLogoutModal(false);
   };
 
+  const handleSidebarToggle = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <header className="main-header">
       <button id="side-menu-toggle">Menu</button>
@@ -67,7 +102,7 @@ const Navigation = ({ isAuthenticated, isCustomer }) => {
           )}
           {isAuthenticated && (
             <>
-              {isCustomer ? (
+              {isCustomer && (
                 <>
                   <li className="main-header__item">
                     <NavLink className="nav-link" to="/cart">
@@ -80,7 +115,8 @@ const Navigation = ({ isAuthenticated, isCustomer }) => {
                     </NavLink>
                   </li>
                 </>
-              ) : (
+              )}
+              {!isCustomer && (
                 <>
                   <li className="main-header__item">
                     <NavLink className="nav-link" to="/admin/add-product">
@@ -118,9 +154,17 @@ const Navigation = ({ isAuthenticated, isCustomer }) => {
                   <span className="nav-username">{username}</span>
                 </li>
               )}
+
               <li className="main-header__item">
                 <button onClick={handleLogoutModalOpen}>Logout</button>
               </li>
+              {isCustomer && (
+                <li className="main-header__item">
+                  <button onClick={handleSidebarToggle}>
+                    <FiShoppingCart />
+                  </button>
+                </li>
+              )}
             </>
           )}
         </ul>
@@ -138,6 +182,14 @@ const Navigation = ({ isAuthenticated, isCustomer }) => {
           </div>
         </div>
       )}
+
+      {/* Cart Sidebar */}
+      <CartSideBar
+        cartItems={cartItems}
+        totalSum={totalSum}
+        isOpen={isSidebarOpen}
+        onClose={() => setIsSidebarOpen(false)}
+      />
     </header>
   );
 };

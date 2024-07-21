@@ -3,11 +3,12 @@ const path = require('path');
 const adminController = require('../controllers/admin');
 const { body } = require('express-validator');
 const isAuth = require('../middleware/is-auth');
+const isAdmin = require('../middleware/is-admin');
 
 const router = express.Router();
 
 // // /admin/products => GET
-router.get('/products', isAuth, adminController.getProducts);
+router.get('/products', isAdmin, adminController.getProducts);
 
 // /admin/add-product => GET
 // router.get('/add-product', isAuth, adminController.getAddProduct);
@@ -27,12 +28,12 @@ router.post(
       .withMessage("Description should be within 5 - 500 characters!")
       .trim(),
   ],
-  isAuth,
+  isAdmin,
   adminController.postAddProduct
 );
 
 // // /admin/edit-product/:productId => GET
-router.get('/product/:productId',isAuth, adminController.getEditProduct);
+router.get("/product/:productId", isAdmin, adminController.getEditProduct);
 
 // // /admin/edit-product => POST
 router.post(
@@ -49,11 +50,11 @@ router.post(
       .withMessage("Description should be within 5 - 500 characters!")
       .trim(),
   ],
-  isAuth,
+  isAdmin,
   adminController.postEditProduct
 );
 
 // // /admin/delete-product => POST
-router.delete('/product/:productId',isAuth, adminController.deleteProduct);
+router.delete("/product/:productId", isAdmin, adminController.deleteProduct);
 
 module.exports = router;

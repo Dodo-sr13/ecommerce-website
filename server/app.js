@@ -50,7 +50,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 const whitelist = [
-  "http://localhost:8080",
+  "http://localhost:3000",
   "https://ecommerce-website-fe.onrender.com",
 ];
 

@@ -55,6 +55,9 @@ const ProductCard = ({ product, admin, customer }) => {
       if (response.data.responseCode === 1) {
         toast.success(response.data.message, {
           autoClose: 1500,
+          onClose: () => {
+            window.location.reload();
+          }
         });
       } else {
         toast.error(response.data.message, {

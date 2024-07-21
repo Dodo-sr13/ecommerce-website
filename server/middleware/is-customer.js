@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
 
     const token = authHeader.split(" ")[1]; // Authorization: Bearer token
 
-    if (token=='null') {
+    if (token == "null") {
       return res.status(401).json({
         responseCode: 0,
         message: "Not authenticated!",
@@ -26,9 +26,7 @@ module.exports = async (req, res, next) => {
     try {
       // Verify the token using the secret key used during signing
       decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
     } catch (err) {
-
       return res.status(401).json({
         responseCode: 0,
         message: "Access denied!",
@@ -43,7 +41,7 @@ module.exports = async (req, res, next) => {
         message: "Not authenticated.",
       });
     }
-    
+
     req.userId = decodedToken.userId;
 
     const user = await User.findById(decodedToken.userId);
@@ -53,12 +51,19 @@ module.exports = async (req, res, next) => {
         message: "User not found.",
       });
     }
+      
+      if (!decodedToken.isCustomer) {
+        console.log('Not authorized!');
+        return res.status(402).json({
+          responseCode: 0,
+          message: "Not authorized!",
+        });
+    }
 
     // Attach user object to the request for further use in route handlers
     req.user = user;
 
     next();
-    
   } catch (err) {
     // Handle errors here
     console.error("Authorization error: ", err);

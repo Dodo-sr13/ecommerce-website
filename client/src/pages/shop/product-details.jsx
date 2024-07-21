@@ -25,7 +25,7 @@ const ProductDetails = () => {
 
   useEffect(() => {
     fetchProductDetails();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const fetchProductDetails = async () => {
     try {

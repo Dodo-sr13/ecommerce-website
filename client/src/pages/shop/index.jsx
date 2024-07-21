@@ -70,7 +70,7 @@ const Shop = () => {
 
   return (
     <>
-      <Head pageTitle="Shop Page" />
+      <Head pageTitle="Shop" />
       <Navigation isAuthenticated={isAuthenticated} isCustomer={isCustomer} />
       <main>
         {loading ? (

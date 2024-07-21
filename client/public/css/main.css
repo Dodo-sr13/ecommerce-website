@@ -638,12 +638,11 @@ form {
 
 .cart-item__title {
   font-size: 24px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .cart-item__price {
   font-size: 20px;
-  position: absolute;
   right: 400px; /* Adjust the value as needed */
 }
 
@@ -654,26 +653,16 @@ form {
 }
 
 .cart-item__image {
-  width: 80px; /* Adjust width as needed */
-  height: auto; /* Maintain aspect ratio */
-  position: absolute;
-  left: 500px; /* Add some space between image and text */
+  width: 80px; /* Set width */
+  height: 80px; /* Set height */
+  object-fit: cover; /* Ensure the image covers the area without distortion */
+  border-radius: 5px; /* Optional: rounded corners for the image */
+  margin-right: 10px; /* Space between image and text */
 }
 
 
-
-.cart-item__details button {
-  margin: 10px 10px; /* Adjusted margin for buttons */
-}
-
-.cart-value {
-  font-size: 24px; /* Cart value font size */
-  color: white; /* White text color */
-  margin-top: 20px; /* Margin above cart value */
-  text-align: center; /* Center align cart value */
-}
-
-.cart-item__buttons button {
+.cart-item__details .btn {
+  margin: 10px 20px;
   padding: 8px 12px; /* Adjust button padding */
   font-size: 16px; /* Adjust button font size */
   background-color: transparent; /* Transparent background */
@@ -681,14 +670,34 @@ form {
   color: white; /* White text color */
   border-radius: 5px; /* Rounded corners */
   cursor: pointer;
-  transition:
-    background-color 0.3s,
-    color 0.3s; /* Smooth transition */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
 
-.cart-item__buttons button:hover {
+/* Delete button specific styles */
+.cart-item__details .btn-danger {
+  background-color: transparent; /* Red background by default */
+  border: 1px solid white; /* White border */
+  color: white; /* White text color */
+}
+
+/* Hover effect for all buttons */
+.cart-item__details .btn:hover,
+.cart-item__details .btn-danger:hover {
   background-color: white; /* White background on hover */
   color: black; /* Black text color on hover */
+}
+
+/* Optionally, you can have a different color on hover specifically for the delete button */
+.cart-item__details .btn-danger:hover {
+  background-color: rgb(184, 39, 39); /* Black background on hover */
+  color: white; /* White text color on hover */
+}
+
+.cart-value {
+  font-size: 24px; /* Cart value font size */
+  color: white; /* White text color */
+  margin-top: 20px; /* Margin above cart value */
+  text-align: center; /* Center align cart value */
 }
 
 
@@ -767,5 +776,138 @@ form {
 
 .orders__item a:hover {
   text-decoration: underline;
+}
+
+/* CartSidebar.css */
+
+.cart-sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-sidebar.open {
+  transform: translateX(0);
+}
+
+.cart-sidebar__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.cart-sidebar__items {
+  padding: 20px;
+  overflow-y: auto;
+  flex: 1; /* Allow the items section to grow and shrink */
+  display: flex;
+  flex-direction: column;
+/* Space out the content and button */
+}
+
+.cart-sidebar__item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cart-sidebar__item-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.cart-sidebar__item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-sidebar__item-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.cart-sidebar__item-price,
+.cart-sidebar__item-quantity {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+/* Center-aligned Go to cart button */
+.cart-sidebar__go-to-cart {
+  align-self: center; /* Center the button horizontally */
+  width:150px;
+  padding: 10px 10px; /* Adjust padding for a consistent size */
+  text-decoration: none;
+  font: inherit;
+  border: 1px solid #000000cb;
+  color: #000000cb;
+  background: white;
+  border-radius: 5px; /* Add some radius for rounded corners */
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 30px; /* Add space above and below the button */
+}
+
+.cart-sidebar__go-to-cart:hover {
+  background-color: #000000cb;
+  color: white;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cart-sidebar {
+    width: 80%; /* Sidebar will take 80% of the screen width on small screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-sidebar {
+    width: 100%; /* Sidebar will take full screen width on very small screens */
+  }
+}
+
+/* Main content shift when sidebar is open */
+body.cart-sidebar-open .main-content {
+  margin-right: 300px;
+}
+
+@media (max-width: 768px) {
+  body.cart-sidebar-open .main-content {
+    margin-right: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  body.cart-sidebar-open .main-content {
+    margin-right: 100%;
+  }
+}
+
+.cart-sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
 }
 

@@ -1,9 +1,6 @@
+// src/App.js
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import Home from "./pages/shop";
@@ -16,7 +13,8 @@ import Cart from "./pages/shop/cart";
 import Orders from "./pages/shop/orders";
 import CheckoutSuccess from "./pages/shop/checkoutsuccess";
 import CheckoutCancel from "./pages/shop/checkoutfailed";
-import { ToastContainer, toast } from "react-toastify";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -24,33 +22,36 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route
-            path="/"
-            element={<Home />}
-          />
-          <Route
-            path="/products"
-            element={<Products />}
-          />
-          <Route
-            path="/login"
-            element={<Login />}
-          />
-          <Route
-            path="/signup"
-            element={<Signup />}
-          />
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route
             path="/admin/products"
-            element={<AdminProducts />}
+            element={
+              <ProtectedRoute
+                element={<AdminProducts />}
+                allowedRoles={["admin"]}
+              />
+            }
           />
           <Route
             path="/admin/add-product"
-            element={<AddProduct />}
+            element={
+              <ProtectedRoute
+                element={<AddProduct />}
+                allowedRoles={["admin"]}
+              />
+            }
           />
           <Route
             path="/admin/edit-product/:productId"
-            element={<EditProduct />}
+            element={
+              <ProtectedRoute
+                element={<EditProduct />}
+                allowedRoles={["admin"]}
+              />
+            }
           />
           <Route
             path="/product-details/:productId"
@@ -58,20 +59,21 @@ function App() {
           />
           <Route
             path="/cart"
-            element={<Cart />}
+            element={
+              <ProtectedRoute element={<Cart />} allowedRoles={["customer"]} />
+            }
           />
           <Route
             path="/orders"
-            element={<Orders />}
+            element={
+              <ProtectedRoute
+                element={<Orders />}
+                allowedRoles={["customer"]}
+              />
+            }
           />
-          <Route
-            path="/checkout/success"
-            element={<CheckoutSuccess />}
-          />
-          <Route
-            path="/checkout/cancel"
-            element={<CheckoutCancel />}
-          />
+          <Route path="/checkout/success" element={<CheckoutSuccess />} />
+          <Route path="/checkout/cancel" element={<CheckoutCancel />} />
         </Routes>
         <ToastContainer />
       </div>

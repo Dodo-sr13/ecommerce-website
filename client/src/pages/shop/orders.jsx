@@ -26,8 +26,11 @@ const Orders = () => {
             });
         }
       } catch (error) {
-          toast.error("Failed to fetch orders.", {
-              autoClose: 1500
+          toast.error(error.response?.data?.message || "Failed to load orders!", {
+            autoClose: 1500,
+            onClose: () => {
+              window.location.href = "/";
+            },
           });
       } finally {
         setIsLoading(false);

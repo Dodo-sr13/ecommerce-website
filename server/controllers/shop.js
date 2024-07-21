@@ -155,7 +155,7 @@ exports.postCart = async (req, res, next) => {
   }
 };
 
-exports.postCartDelete = async (req, res, next) => {
+exports.postCartRemove = async (req, res, next) => {
   const productId = req.body.productId;
   try {
     const user = await User.findById(req.userId);
@@ -176,6 +176,31 @@ exports.postCartDelete = async (req, res, next) => {
     res.status(500).json({
       responseCode: 0,
       message: 'Failed to remove product from cart!'
+    });
+  }
+};
+
+exports.postCartDelete = async (req, res, next) => {
+  const productId = req.body.productId;
+  try {
+    const user = await User.findById(req.userId);
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).json({
+        responseCode: 0,
+        message: "Product not found!",
+      });
+    }
+    await user.deleteFromCart(product);
+    res.status(200).json({
+      responseCode: 1,
+      message: "Product deleted from cart!",
+    });
+  } catch (err) {
+    console.error("Error deleting product from cart:", err);
+    res.status(500).json({
+      responseCode: 0,
+      message: "Failed to delete product from cart!",
     });
   }
 };

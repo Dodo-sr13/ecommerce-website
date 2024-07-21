@@ -104,10 +104,38 @@ userSchema.methods.removeFromCart = function(product) {
   
     this.cart = updatedCart;
     return this.save();
+  }
+};
 
+userSchema.methods.deleteFromCart = function (product) {
+  const cartProductIndex = this.cart.items.findIndex((cp) => {
+    return cp.productId.toString() === product._id.toString();
+  });
+
+  let newQuantity = 0;
+  let newPrice = 0;
+  let updatedCartItems = [...this.cart.items];
+
+  if (cartProductIndex >= 0) {
+    updatedCartItems[cartProductIndex].quantity = newQuantity;
+    updatedCartItems[cartProductIndex].price = newPrice;
   }
 
-  
+  if (newQuantity === 0) {
+    const productId = product._id;
+    updatedCartItems = this.cart.items.filter((item) => {
+      return item.productId.toString() !== productId.toString();
+    });
+    this.cart.items = updatedCartItems;
+    return this.save();
+  } else {
+    const updatedCart = {
+      items: updatedCartItems,
+    };
+
+    this.cart = updatedCart;
+    return this.save();
+  }
 };
 
 

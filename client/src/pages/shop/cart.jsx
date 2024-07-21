@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { loadStripe } from "@stripe/stripe-js";
 import "react-toastify/dist/ReactToastify.css";
 import { API_URL, NODE_ENV, REACT_APP_API_URL, STRIPE_API_KEY } from "../../constants/index";
+import { IoTrashOutline } from "react-icons/io5";
 
 
 const API_BASE_PATH =
@@ -36,8 +37,11 @@ const Cart = () => {
     } catch (error) {
       console.error("Error fetching cart items:", error);
       setIsLoading(false);
-      toast.error("Failed to fetch cart items!", {
+      toast.error(error.response?.data?.message || "Failed to load cart!", {
         autoClose: 1500,
+        onClose: () => {
+          window.location.href = "/";
+        },
       });
     }
   };
@@ -47,6 +51,7 @@ const Cart = () => {
       const response = await axiosInstance.post("/cart", { productId });
       if (response.data.responseCode === 1) {
         fetchCartItems();
+        // window.location.reload();
       } else {
         toast.error(response.data.message, {
           autoClose: 1500,
@@ -62,11 +67,12 @@ const Cart = () => {
 
   const handleDecrement = async (productId) => {
     try {
-      const response = await axiosInstance.post("/cart-delete-item", {
+      const response = await axiosInstance.post("/cart-remove-item", {
         productId,
       });
       if (response.data.responseCode === 1) {
         fetchCartItems();
+        // window.location.reload();
       } else {
         toast.error(response.data.message, {
           autoClose: 1500,
@@ -75,6 +81,27 @@ const Cart = () => {
     } catch (error) {
       console.error("Error decrementing product quantity:", error);
       toast.error("Failed to decrement product quantity!", {
+        autoClose: 1500,
+      });
+    }
+  };
+
+  const handleDelete = async (productId) => {
+    try {
+      const response = await axiosInstance.post("/cart-delete-item", {
+        productId,
+      });
+      if (response.data.responseCode === 1) {
+        fetchCartItems();
+        // window.location.reload();
+      } else {
+        toast.error(response.data.message, {
+          autoClose: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error deleting product quantity:", error);
+      toast.error("Failed to delete product quantity!", {
         autoClose: 1500,
       });
     }
@@ -152,6 +179,11 @@ const Cart = () => {
                       className="btn"
                       onClick={() => handleDecrement(item.productId._id)}>
                       -
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => handleDelete(item.productId._id)}>
+                      <IoTrashOutline />
                     </button>
                   </div>
                 </div>
